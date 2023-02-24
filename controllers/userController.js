@@ -1,12 +1,6 @@
 const { ObjectId } = require('mongoose').Types;
 const { User, Thought } = require('../models');
 
-// Aggregate function to get the number of students overall
-const headCount = async () =>
-  User.aggregate()
-    .count('userCount')
-    .then((numberOfUsers) => numberOfUsers);
-
 // Aggregate function for getting the overall grade using $avg
 const grade = async (userId) =>
   User.aggregate([
@@ -29,8 +23,7 @@ module.exports = {
     User.find()
       .then(async (users) => {
         const userObj = {
-          users,
-          headCount: await headCount(),
+          users
         };
         return res.json(userObj);
       })
