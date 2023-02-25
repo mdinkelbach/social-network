@@ -1,13 +1,11 @@
 const connection = require('../config/connection');
 const { User, Thought } = require('../models');
-const { getName, getEmail, getThought } = require('./data');
 
 connection.on('error', (err) => err);
 
 connection.once('open', async () => {
   console.log('connected');
 
-  // Drop existing students
   await User.deleteMany({});
 
   await Thought.deleteMany({});
