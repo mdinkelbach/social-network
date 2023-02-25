@@ -1,5 +1,6 @@
 const { Schema, model } = require('mongoose');
 const reactionSchema = require('./Reaction')
+const { formatDate } = require('../utils/helpers')
 
 // Schema to create a course model
 const thoughtSchema = new Schema(
@@ -13,7 +14,7 @@ const thoughtSchema = new Schema(
     createdAt: {
       type: Date,
       default: Date.now(),
-      //get: (date) => formatDate(date), Set up formatDate function later**
+      get: (date) => formatDate(date)
     },
     username: {
       type: String,
@@ -24,6 +25,7 @@ const thoughtSchema = new Schema(
   {
     toJSON: {
       virtuals: true,
+      getters: true
     },
   }
 );
