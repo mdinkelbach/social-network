@@ -10,7 +10,7 @@ connection.once('open', async () => {
 
   await Thought.deleteMany({});
 
-  const thoughts = [
+  /*const thoughts = [
     {
       thoughtText: 'Thought 1',
       username: 'Jade',
@@ -135,7 +135,7 @@ connection.once('open', async () => {
         }
       ]
     },
-  ];
+  ];*/
 
   const users = [
     {
@@ -162,10 +162,10 @@ connection.once('open', async () => {
 
   await User.collection.insertMany(users);
 
-  await Thought.collection.insertMany(thoughts);
+  //await Thought.collection.insertMany(thoughts);
 
   console.table(users);
-  console.table(thoughts);
+  //console.table(thoughts);
   console.info('Seeding complete! 🌱');
   process.exit(0);
 });
