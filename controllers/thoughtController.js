@@ -20,12 +20,14 @@ module.exports = {
 
   createThought(req, res) {
     Thought.create(req.body)
-    User.findOneAndUpdate(
-      { _id: req.body.userId },
-      { $addToSet: { thoughts: res } },
-      { runValidators: true, new: true }
-    )
-      .then((thought) => res.json(thought))
+      .then((thought) => {
+      return User.findOneAndUpdate(
+        { _id: req.body.userId },
+        { $addToSet: { thoughts: thought._id } },
+        { runValidators: true, new: true }
+      )
+    })
+    .then(res.json(req.body))
       .catch((err) => {
         console.log(err);
         return res.status(500).json(err);
