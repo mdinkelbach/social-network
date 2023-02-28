@@ -36,12 +36,18 @@ module.exports = {
 
   deleteThought(req, res) {
     Thought.findOneAndRemove({ _id: req.params.thoughtId })
-      .then((thought) =>
-        !thought
-          ? res.status(404).json({ message: 'No thought with that ID' })
-          : res.json(thought)
+    .then((thought) => {
+      return User.findOneAndUpdate(
+        { username: thought.username },
+        { $pull: { thoughts: req.params.thoughtId } },
+        { runValidators: true, new: true }
       )
-      .catch((err) => res.status(500).json(err));
+    })
+    .then(res.json(req.body))
+      .catch((err) => {
+        console.log(err);
+        return res.status(500).json(err);
+      });
   },
 
   updateThought(req, res) {
